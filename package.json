@@ -1,0 +1,27 @@
+{
+  "name": "@hexlet/code",
+  "version": "1.0.0",
+  "description": "[![Actions Status](https://github.com/Giridhar108/frontend-project-lvl2/workflows/hexlet-check/badge.svg)](https://github.com/Giridhar108/frontend-project-lvl2/actions)",
+  "main": "gendiff.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Giridhar108/frontend-project-lvl2.git"
+  },
+  "type": "module",
+  "author": "German Fomenko",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Giridhar108/frontend-project-lvl2/issues"
+  },
+  "homepage": "https://github.com/Giridhar108/frontend-project-lvl2#readme",
+  "bin": {
+    "gendiff": "gendiff.js"
+  },
+  "dependencies": {
+    "commander": "^6.2.0",
+    "fs": "^0.0.1-security"
+  }
+}
