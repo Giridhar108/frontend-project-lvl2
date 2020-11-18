@@ -22,6 +22,6 @@
   },
   "dependencies": {
     "commander": "^6.2.0",
-    "fs": "^0.0.1-security"
+    "make": "^0.0.0"
   }
 }

@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { program } from 'commander';
 import genDiff from '../frontend-project-lvl2/src/genDiff.js';
+// import genDiff from '../frontend-project-lvl2/src/genDiff.js';
 // import genDiff from '/hexlet-git/frontend-project-lvl2/src/genDiff.js';
 
 program
