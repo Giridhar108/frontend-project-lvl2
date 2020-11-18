@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 import { program } from 'commander';
-import genDiff from '../frontend-project-lvl2/src/genDiff.js';
+import genDiff from './src/genDiff.js';
 // import genDiff from '../frontend-project-lvl2/src/genDiff.js';
 // import genDiff from '/hexlet-git/frontend-project-lvl2/src/genDiff.js';
 
@@ -10,12 +10,11 @@ program
   .option('-f, --format [type]', 'output format')
   // .option('-h, --help', 'output usage information')
   .arguments('<filepath1> <filepath2>')
-  .action(function (pathOne, pathTwo) {
+  .action((pathOne, pathTwo) => {
     console.log(genDiff(pathOne, pathTwo));
     // console.log('path one:', pathOne);
     // console.log('path two:', pathTwo);
-  })
-program.parse(process.argv)
+  });
+program.parse(process.argv);
 
 if (program.format) console.log(`type: ${program.format}`);
-

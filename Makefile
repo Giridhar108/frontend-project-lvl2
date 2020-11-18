@@ -6,3 +6,6 @@ publish:
 
 do:
 		node gendiff.js  ../frontend-project-lvl2/path/first.json  ../frontend-project-lvl2/path/second.json
+
+lint:
+		npx eslint .
