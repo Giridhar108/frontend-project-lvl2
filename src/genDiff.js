@@ -1,12 +1,14 @@
 import * as fs from "fs";
 import * as path from "path";
+import stringify from "../src/stringify.js";
+
 export default (pathOne, pathTwo) => {
   const first = JSON.parse(fs.readFileSync(path.resolve(`${pathOne}`)));
   const second = JSON.parse(fs.readFileSync(path.resolve(`${pathTwo}`)));
 
   const keys = Object.entries({ ...first, ...second }).sort();
 
-  return JSON.stringify(keys.reduce((acc, c) => {
+  return stringify(keys.reduce((acc, c) => {
     if (first[`${c[0]}`] === second[`${c[0]}`]) {
       acc[`${c[0]}`] = c[1];
     } else if (
