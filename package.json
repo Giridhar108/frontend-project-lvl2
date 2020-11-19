@@ -4,13 +4,17 @@
   "description": "[![Actions Status](https://github.com/Giridhar108/frontend-project-lvl2/workflows/hexlet-check/badge.svg)](https://github.com/Giridhar108/frontend-project-lvl2/actions)",
   "main": "gendiff.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npx jest"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Giridhar108/frontend-project-lvl2.git"
   },
   "type": "module",
+  "jest": {
+    "testEnvironment": "node",
+    "transform": {}
+  },
   "author": "German Fomenko",
   "license": "ISC",
   "bugs": {
@@ -24,9 +28,11 @@
     "-": "^0.0.1",
     "commander": "^6.2.0",
     "g": "^2.0.1",
+    "jest-cli": "^26.6.3",
     "make": "^0.0.0"
   },
   "devDependencies": {
+    "@types/node": "^14.14.8",
     "eslint": "^7.13.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
