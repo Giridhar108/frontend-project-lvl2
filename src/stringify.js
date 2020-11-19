@@ -7,7 +7,7 @@ export default (v, r = '  ', s = 1) => {
       acc += `${repit}${a}\n`;
     }
     return acc;
-  }, `{\n`);
-  
-  return result.replace(/,/g, ': ') + '}'
-}
+  }, '{\n');
+
+  return `${result.replace(/,/g, ': ')}}`;
+};
