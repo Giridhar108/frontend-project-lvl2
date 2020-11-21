@@ -1,17 +1,20 @@
-import * as fs from 'fs';
-import * as path from 'path';
-import stringify from './stringify.js';
+import getObjects from './getObjects.js';
 
-export default (pathOne, pathTwo) => {
-  const first = JSON.parse(fs.readFileSync(path.resolve(`${pathOne}`)));
-  const second = JSON.parse(fs.readFileSync(path.resolve(`${pathTwo}`)));
+export const genDiff = (pathOne, pathTwo) => {
+  const { first, second } = getObjects(pathOne, pathTwo);
+
+  const iter = (first, second) => {
 
   const keys = Object.entries({ ...first, ...second }).sort();
 
-  return stringify(keys.reduce((acc, c) => {
-    if (first[`${c[0]}`] === second[`${c[0]}`]) {
-      acc[`${c[0]}`] = first[`${c[0]}`];
-    } else if (
+  return keys.reduce((acc, c) => {
+    if(typeof (first[`${c[0]}`]) === 'object' &&
+     typeof (second[`${c[0]}`]) === 'object'){
+      acc[`${c[0]}`] = iter(first[`${c[0]}`], second[`${c[0]}`])
+    } 
+    else if (first[`${c[0]}`] === second[`${c[0]}`]) {
+      acc[`  ${c[0]}`] = first[`${c[0]}`];
+    }  else if (
       first[`${c[0]}`] !== second[`${c[0]}`]
       && first[`${c[0]}`] !== undefined
       && second[`${c[0]}`] !== undefined
@@ -22,9 +25,11 @@ export default (pathOne, pathTwo) => {
       acc[`+ ${c[0]}`] = second[`${c[0]}`];
     } else if (second[`${c[0]}`] === undefined) {
       acc[`- ${c[0]}`] = first[`${c[0]}`];
-    }
+    } 
     return acc;
-  }, {}));
+  }, {});
+}
+return iter(first, second)
 };
 
 /*

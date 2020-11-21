@@ -30,6 +30,7 @@
     "commander": "^6.2.0",
     "g": "^2.0.1",
     "jest-cli": "^26.6.3",
+    "js-yaml": "^3.14.0",
     "make": "^0.0.0"
   },
   "devDependencies": {

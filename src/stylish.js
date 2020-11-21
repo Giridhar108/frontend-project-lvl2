@@ -1,4 +1,8 @@
-export default (v, r = '  ', s = 1) => {
+export default (obj) => JSON.stringify(obj, null, 4)
+.replace(/"/g, '').replace(/,/g, '')
+
+
+/* (v, r = '  ', s = 1) => {
   const repit = r.repeat(s);
   const result = Object.entries(v).reduce((acc, a) => {
     if (a[0][0] !== '-' && a[0][0] !== '+') {
@@ -11,3 +15,4 @@ export default (v, r = '  ', s = 1) => {
 
   return `${result.replace(/,/g, ': ')}}`;
 };
+ */

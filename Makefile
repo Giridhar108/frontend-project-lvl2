@@ -5,10 +5,20 @@ publish:
 		npm publish --dry-run
 
 do:
-		node gendiff.js  ../frontend-project-lvl2/path/first.json  ../frontend-project-lvl2/path/second.json
+		node gendiff.js  __fixtures__/first.json  __fixtures__/second.json
+
+do-big:
+		node gendiff.js  __fixtures__/firstBig.json  __fixtures__/secondBig.json
+
+doY:
+		node gendiff.js  __fixtures__/first.yaml  __fixtures__/second.yaml
+
+do-bigY:
+		node gendiff.js  __fixtures__/firstBig.yaml  __fixtures__/secondBig.yaml
 
 lint:
 		npx eslint .
+
 test:
 		npm test
 
