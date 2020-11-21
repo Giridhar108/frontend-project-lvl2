@@ -1,35 +1,34 @@
 import getObjects from './getObjects.js';
 
-export const genDiff = (pathOne, pathTwo) => {
+export default (pathOne, pathTwo) => {
   const { first, second } = getObjects(pathOne, pathTwo);
 
-  const iter = (first, second) => {
+  const iter = (one, two) => {
+    const keys = Object.entries({ ...one, ...two }).sort();
 
-  const keys = Object.entries({ ...first, ...second }).sort();
+    return keys.reduce((acc, c) => {
+      if (typeof (one[`${c[0]}`]) === 'object'
+     && typeof (two[`${c[0]}`]) === 'object') {
+        acc[`${c[0]}`] = iter(one[`${c[0]}`], two[`${c[0]}`]);
+      } else if (one[`${c[0]}`] === two[`${c[0]}`]) {
+        acc[`  ${c[0]}`] = one[`${c[0]}`];
+      } else if (
+        one[`${c[0]}`] !== two[`${c[0]}`]
+      && one[`${c[0]}`] !== undefined
+      && two[`${c[0]}`] !== undefined
+      ) {
+        acc[`- ${c[0]}`] = one[`${c[0]}`];
+        acc[`+ ${c[0]}`] = two[`${c[0]}`];
+      } else if (one[`${c[0]}`] === undefined) {
+        acc[`+ ${c[0]}`] = two[`${c[0]}`];
+      } else if (two[`${c[0]}`] === undefined) {
+        acc[`- ${c[0]}`] = one[`${c[0]}`];
+      }
+      return acc;
+    }, {});
+  };
 
-  return keys.reduce((acc, c) => {
-    if(typeof (first[`${c[0]}`]) === 'object' &&
-     typeof (second[`${c[0]}`]) === 'object'){
-      acc[`${c[0]}`] = iter(first[`${c[0]}`], second[`${c[0]}`])
-    } 
-    else if (first[`${c[0]}`] === second[`${c[0]}`]) {
-      acc[`  ${c[0]}`] = first[`${c[0]}`];
-    }  else if (
-      first[`${c[0]}`] !== second[`${c[0]}`]
-      && first[`${c[0]}`] !== undefined
-      && second[`${c[0]}`] !== undefined
-    ) {
-      acc[`- ${c[0]}`] = first[`${c[0]}`];
-      acc[`+ ${c[0]}`] = second[`${c[0]}`];
-    } else if (first[`${c[0]}`] === undefined) {
-      acc[`+ ${c[0]}`] = second[`${c[0]}`];
-    } else if (second[`${c[0]}`] === undefined) {
-      acc[`- ${c[0]}`] = first[`${c[0]}`];
-    } 
-    return acc;
-  }, {});
-}
-return iter(first, second)
+  return iter(first, second);
 };
 
 /*

@@ -3,8 +3,8 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import {genDiff} from '../src/genDiff.js';
-import stylish from '../src/stylish.js';
+import genDiff from '../src/genDiff.js';
+// import stylish from '../src/stylish.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -24,7 +24,7 @@ test('test YAML', () => {
 });
 
 const rightBig = JSON.parse(fs.readFileSync(getFixturePath('expectedFlatBig.json')));
-console.log(rightBig)
+console.log(rightBig);
 
 test('test JSON', () => {
   expect(genDiff(getFixturePath('first.json'), getFixturePath('second.json')))

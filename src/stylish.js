@@ -1,6 +1,5 @@
 export default (obj) => JSON.stringify(obj, null, 4)
-.replace(/"/g, '').replace(/,/g, '')
-
+  .replace(/"/g, '').replace(/,/g, '');
 
 /* (v, r = '  ', s = 1) => {
   const repit = r.repeat(s);
