@@ -1,41 +1,43 @@
+import _ from 'lodash';
 import getObjects from './getObjects.js';
+import stylish from '../formatters/stylish.js';
+import plain from '../formatters/plain.js';
+import json from '../formatters/json.js';
 
-export default (pathOne, pathTwo) => {
-  const { first, second } = getObjects(pathOne, pathTwo);
+export default (pathOne, pathTwo, format) => {
+  const { one, two } = getObjects(pathOne, pathTwo);
 
-  const iter = (one, two) => {
-    const keys = Object.entries({ ...one, ...two }).sort();
+  const genDiff = (first, second) => {
+    const keys = Object.entries({ ...first, ...second }).sort();
+    const commonKeys = keys.map((a) => a[0]);
+    return commonKeys.map((a) => {
+      const firstValue = first[a];
+      const secondValue = second[a];
 
-    return keys.reduce((acc, c) => {
-      if (typeof (one[`${c[0]}`]) === 'object'
-     && typeof (two[`${c[0]}`]) === 'object') {
-        acc[`${c[0]}`] = iter(one[`${c[0]}`], two[`${c[0]}`]);
-      } else if (one[`${c[0]}`] === two[`${c[0]}`]) {
-        acc[`  ${c[0]}`] = one[`${c[0]}`];
-      } else if (
-        one[`${c[0]}`] !== two[`${c[0]}`]
-      && one[`${c[0]}`] !== undefined
-      && two[`${c[0]}`] !== undefined
-      ) {
-        acc[`- ${c[0]}`] = one[`${c[0]}`];
-        acc[`+ ${c[0]}`] = two[`${c[0]}`];
-      } else if (one[`${c[0]}`] === undefined) {
-        acc[`+ ${c[0]}`] = two[`${c[0]}`];
-      } else if (two[`${c[0]}`] === undefined) {
-        acc[`- ${c[0]}`] = one[`${c[0]}`];
+      if (_.has(first, a) && _.has(second, a)) {
+        if (typeof (firstValue) === 'object' && typeof (secondValue) === 'object') {
+          return { name: a, status: 'hasChildren', children: genDiff(firstValue, secondValue) };
+        }
+        if (firstValue === secondValue) {
+          return { name: a, status: 'was', value: firstValue };
+        }
+
+        return {
+          name: a, status: 'change', oldValue: firstValue, newValue: secondValue,
+        };
       }
-      return acc;
-    }, {});
+
+      if (!_.has(first, a) && _.has(second, a)) {
+        return { name: a, status: 'add', value: secondValue };
+      }
+
+      return { name: a, status: 'deleted', value: firstValue };
+    });
   };
-
-  return iter(first, second);
+  if (format === 'json') {
+    return json(genDiff(one, two));
+  } if (format === 'plain') {
+    return plain(genDiff(one, two));
+  }
+  return stylish(genDiff(one, two));
 };
-
-/*
-c:/hexlet-git/frontend-project-lvl2/path/first.json
-c:/hexlet-git/frontend-project-lvl2/path/second.json
- */
-/*
- ../frontend-project-lvl2/path/first.json
- ../frontend-project-lvl2/path/second.json
- */

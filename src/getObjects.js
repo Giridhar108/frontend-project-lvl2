@@ -6,13 +6,13 @@ import whatIsFormat from './whatIsFormat.js';
 export default (pathOne, pathTwo) => {
   const format = whatIsFormat(pathOne);
   if (format === '.json') {
-    const first = jsonParse(fs.readFileSync(path.resolve(`${pathOne}`)));
-    const second = jsonParse(fs.readFileSync(path.resolve(`${pathTwo}`)));
-    return { first, second };
+    const one = jsonParse(fs.readFileSync(path.resolve(`${pathOne}`)));
+    const two = jsonParse(fs.readFileSync(path.resolve(`${pathTwo}`)));
+    return { one, two };
   } if (format === '.yaml') {
-    const first = yamlParse(fs.readFileSync(path.resolve(`${pathOne}`)));
-    const second = yamlParse(fs.readFileSync(path.resolve(`${pathTwo}`)));
-    return { first, second };
+    const one = yamlParse(fs.readFileSync(path.resolve(`${pathOne}`)));
+    const two = yamlParse(fs.readFileSync(path.resolve(`${pathTwo}`)));
+    return { one, two };
   }
   throw new Error('Описался');
 };
