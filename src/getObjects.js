@@ -8,4 +8,5 @@ export default (file, format) => {
     const result = yamlParse(file);
     return result;
   }
+  return file;
 };
