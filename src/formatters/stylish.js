@@ -1,14 +1,15 @@
 export default (obj, r = '  ', s = 2) => {
   const iter = (node, depth) => {
     const repeat = r.repeat((s * depth) - 1);
+
     return node.map((key) => {
       const stringify = (value) => {
         if (typeof (value) === 'object' && value !== null) {
           if (!Array.isArray(value)) {
             const some = Object.entries(value);
-            return `{ ${iter(some, depth + 1)}\n${repeat}  }`;
+            return `{${iter(some, depth + 1)}\n${repeat}  }`;
           }
-          return `{ ${iter(value, depth + 1)}\n${repeat}  }`;
+          return `{${iter(value, depth + 1)}\n${repeat}  }`;
         }
         return `${value}`;
       };
