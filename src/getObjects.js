@@ -1,18 +1,12 @@
-import * as fs from 'fs';
-import * as path from 'path';
 import { jsonParse, yamlParse } from './parsers.js';
-import whatIsFormat from './whatIsFormat.js';
 
-export default (pathOne, pathTwo) => {
-  const format = whatIsFormat(pathOne);
+export default (file, format) => {
   if (format === '.json') {
-    const one = jsonParse(fs.readFileSync(path.resolve(`${pathOne}`)));
-    const two = jsonParse(fs.readFileSync(path.resolve(`${pathTwo}`)));
-    return { one, two };
+    const result = jsonParse(file);
+    return result;
   } if (format === '.yaml') {
-    const one = yamlParse(fs.readFileSync(path.resolve(`${pathOne}`)));
-    const two = yamlParse(fs.readFileSync(path.resolve(`${pathTwo}`)));
-    return { one, two };
+    const result = yamlParse(file);
+    return result;
   }
   throw new Error('Описался');
 };
