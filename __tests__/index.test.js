@@ -21,11 +21,16 @@ const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', 
 //     .toBe(right);
 // });
 
-const getData = (file) => fs.readFileSync(getFixturePath(file), 'utf-8');
+const getData = (fileName) => fs.readFileSync(getFixturePath(fileName), 'utf-8');
 
 test('test JSON big', () => {
   expect(genDiff(getFixturePath('firstBig.json'), getFixturePath('secondBig.json')))
-    .toBe(getData('expectedFlatBig.txt'));
+    .toBe(getData('expectedStylish.txt'));
+});
+
+test('test JSON big stylish', () => {
+  expect(genDiff(getFixturePath('firstBig.json'), getFixturePath('secondBig.json'), 'stylish'))
+    .toBe(getData('expectedStylish.txt'));
 });
 
 test('test JSON big plain', () => {
@@ -33,14 +38,14 @@ test('test JSON big plain', () => {
     .toBe(getData('expectedPlain.txt'));
 });
 
-test('test JSON big json', () => {
-  expect(genDiff(getFixturePath('firstBig.json'), getFixturePath('secondBig.json'), 'json'))
-    .toBe(getData('expectedJSON.txt'));
-});
-
 test('test YAML big', () => {
   expect(genDiff(getFixturePath('firstBig.yaml'), getFixturePath('secondBig.yaml')))
-    .toBe(getData('expectedFlatBig.txt'));
+    .toBe(getData('expectedStylish.txt'));
+});
+
+test('test JSON big stylish', () => {
+  expect(genDiff(getFixturePath('firstBig.json'), getFixturePath('secondBig.json'), 'stylish'))
+    .toBe(getData('expectedStylish.txt'));
 });
 
 test('test YAML big plain', () => {

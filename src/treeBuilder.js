@@ -1,30 +1,26 @@
 import _ from 'lodash';
 
 const treeBulder = (first, second) => {
-  const keys = Object.entries({ ...first, ...second }).sort();
-  const commonKeys = keys.map((a) => a[0]);
-  return commonKeys.map((a) => {
-    const firstValue = first[a];
-    const secondValue = second[a];
-
-    if (_.has(first, a) && _.has(second, a)) {
-      if (typeof (firstValue) === 'object' && typeof (secondValue) === 'object') {
-        return { name: a, status: 'hasChildren', children: treeBulder(firstValue, secondValue) };
-      }
-      if (firstValue === secondValue) {
-        return { name: a, status: 'was', value: firstValue };
-      }
-
+  const keys = _.union(_.keys(first), _.keys(second)).sort();
+  return keys.map((key) => {
+    const firstValue = first[key];
+    const secondValue = second[key];
+    const has = _.has(first, key) && _.has(second, key);
+    if (has && typeof (firstValue) === 'object' && typeof (secondValue) === 'object') {
+      return { name: key, status: 'hasChildren', children: treeBulder(firstValue, secondValue) };
+    }
+    if (has && firstValue === secondValue) {
+      return { name: key, status: 'was', value: firstValue };
+    }
+    if (has && firstValue !== secondValue) {
       return {
-        name: a, status: 'change', oldValue: firstValue, newValue: secondValue,
+        name: key, status: 'change', oldValue: firstValue, newValue: secondValue,
       };
     }
-
-    if (!_.has(first, a) && _.has(second, a)) {
-      return { name: a, status: 'add', value: secondValue };
+    if (!_.has(first, key) && _.has(second, key)) {
+      return { name: key, status: 'add', value: secondValue };
     }
-
-    return { name: a, status: 'deleted', value: firstValue };
+    return { name: key, status: 'deleted', value: firstValue };
   });
 };
 
