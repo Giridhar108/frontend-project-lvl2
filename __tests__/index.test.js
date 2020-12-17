@@ -9,51 +9,39 @@ const __dirname = path.dirname(__filename);
 
 const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
 
-// const right = fs.readFileSync(getFixturePath('expectedFlat.txt'), 'utf-8');
-
-// test('test JSON', () => {
-//   expect(genDiff(getFixturePath('first.json'), getFixturePath('second.json')))
-//     .toBe(right);
-// });
-
-// test('test YAML', () => {
-//   expect(genDiff(getFixturePath('first.yaml'), getFixturePath('second.yaml')))
-//     .toBe(right);
-// });
-
 const getData = (fileName) => fs.readFileSync(getFixturePath(fileName), 'utf-8');
 
 test('test JSON big', () => {
-  expect(genDiff(getFixturePath('firstBig.json'), getFixturePath('secondBig.json')))
+  expect(genDiff(getFixturePath('first.json'), getFixturePath('second.json')))
     .toBe(getData('expectedStylish.txt'));
 });
 
 test('test JSON big stylish', () => {
-  expect(genDiff(getFixturePath('firstBig.json'), getFixturePath('secondBig.json'), 'stylish'))
+  expect(genDiff(getFixturePath('first.json'), getFixturePath('second.json'), 'stylish'))
     .toBe(getData('expectedStylish.txt'));
 });
 
 test('test JSON big plain', () => {
-  expect(genDiff(getFixturePath('firstBig.json'), getFixturePath('secondBig.json'), 'plain'))
+  expect(genDiff(getFixturePath('first.json'), getFixturePath('second.json'), 'plain'))
     .toBe(getData('expectedPlain.txt'));
 });
 
 test('test YAML big', () => {
-  expect(genDiff(getFixturePath('firstBig.yaml'), getFixturePath('secondBig.yaml')))
+  expect(genDiff(getFixturePath('first.yaml'), getFixturePath('second.yaml')))
     .toBe(getData('expectedStylish.txt'));
 });
 
 test('test JSON big stylish', () => {
-  expect(genDiff(getFixturePath('firstBig.json'), getFixturePath('secondBig.json'), 'stylish'))
+  expect(genDiff(getFixturePath('first.json'), getFixturePath('second.json'), 'stylish'))
     .toBe(getData('expectedStylish.txt'));
 });
 
 test('test YAML big plain', () => {
-  expect(genDiff(getFixturePath('firstBig.yaml'), getFixturePath('secondBig.yaml'), 'plain'))
+  expect(genDiff(getFixturePath('first.yaml'), getFixturePath('second.yaml'), 'plain'))
     .toBe(getData('expectedPlain.txt'));
 });
 
 test('test YAML big json', () => {
-  expect(genDiff(getFixturePath('firstBig.yaml'), getFixturePath('secondBig.yaml'), 'json'))
+  expect(genDiff(getFixturePath('first.yaml'), getFixturePath('second.yaml'), 'json'))
     .toBe(getData('expectedJSON.txt'));
 });
