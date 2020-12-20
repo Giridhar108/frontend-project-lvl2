@@ -3,8 +3,9 @@ import _ from 'lodash';
 const stringify = (iter, value, depth, repeat) => {
   if (_.isObject(value)) {
     if (!Array.isArray(value)) {
-      const some = Object.entries(value);
-      return ` {${iter(some, depth + 1)}\n${repeat}  }`;
+      const entries = Object.entries(value);
+      const result = entries.map((a) => ({ name: a[0], status: 'unchanged', value: a[1] }));
+      return ` {${iter(result, depth + 1)}\n${repeat}  }`;
     }
     return ` {${iter(value, depth + 1)}\n${repeat}  }`;
   }
@@ -15,9 +16,9 @@ const stringify = (iter, value, depth, repeat) => {
   return ` ${value}`;
 };
 
-export default (obj, strRepit = '  ', spase = 2) => {
+export default (obj, indent = '  ', space = 2) => {
   const iter = (node, depth) => {
-    const repeat = strRepit.repeat((spase * depth) - 1);
+    const repeat = indent.repeat((space * depth) - 1);
     return node.map((key) => {
       switch (key.status) {
         case 'hasChildren':
@@ -31,7 +32,7 @@ export default (obj, strRepit = '  ', spase = 2) => {
         case 'changed':
           return `\n${repeat}- ${key.name}:${stringify(iter, key.oldValue, depth, repeat)}\n${repeat}+ ${key.name}:${stringify(iter, key.newValue, depth, repeat)}`;
         default:
-          return `\n${repeat}  ${key[0]}:${stringify(iter, key[1], depth, repeat)}`; // иначе пропадают значения у последних групп.
+          return new Error();
       }
     });
   };
