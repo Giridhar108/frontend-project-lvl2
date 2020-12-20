@@ -5,22 +5,24 @@ const treeBulder = (data1, data2) => {
   return keys.map((key) => {
     const firstValue = data1[key];
     const secondValue = data2[key];
-    const has = _.has(data1, key) && _.has(data2, key);
-    if (has && _.isObject(firstValue) && _.isObject(secondValue)) {
-      return { name: key, status: 'hasChildren', children: treeBulder(firstValue, secondValue) };
+
+    if (!_.has(data1, key)) {
+      return { name: key, status: 'added', value: secondValue };
     }
-    if (has && firstValue === secondValue) {
-      return { name: key, status: 'unchanged', value: firstValue };
+    if (!_.has(data2, key)) {
+      return { name: key, status: 'deleted', value: firstValue };
     }
-    if (has && firstValue !== secondValue) {
+    if (_.isObject(firstValue) && _.isObject(secondValue)) {
+      return {
+        name: key, status: 'hasChildren', children: treeBulder(firstValue, secondValue),
+      };
+    }
+    if (firstValue !== secondValue) {
       return {
         name: key, status: 'changed', oldValue: firstValue, newValue: secondValue,
       };
     }
-    if (!_.has(data1, key) && _.has(data2, key)) {
-      return { name: key, status: 'added', value: secondValue };
-    }
-    return { name: key, status: 'deleted', value: firstValue };
+    return { name: key, status: 'unchanged', value: firstValue };
   });
 };
 
