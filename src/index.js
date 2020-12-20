@@ -6,11 +6,11 @@ import formaterChoise from './format.js';
 
 const getFormat = (file) => path.extname(file).replace(/\./, '');
 
-export default (data1, data2, format = 'stylish') => {
-  const formatFileOne = getFormat(data1);
-  const formatFileTwo = getFormat(data2);
-  const one = parse(fs.readFileSync(path.resolve(`${data1}`)), formatFileOne);
-  const two = parse(fs.readFileSync(path.resolve(`${data2}`)), formatFileTwo);
-  const innerPresentation = buildTree(one, two);
+export default (pathOne, pathTwo, format = 'stylish') => {
+  const formatFileOne = getFormat(pathOne);
+  const formatFileTwo = getFormat(pathTwo);
+  const data1 = parse(fs.readFileSync(path.resolve(`${pathOne}`)), formatFileOne);
+  const data2 = parse(fs.readFileSync(path.resolve(`${pathTwo}`)), formatFileTwo);
+  const innerPresentation = buildTree(data1, data2);
   return formaterChoise(format, innerPresentation);
 };
