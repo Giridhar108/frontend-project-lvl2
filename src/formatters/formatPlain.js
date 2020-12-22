@@ -26,7 +26,7 @@ export default (obj) => {
         case 'unchanged':
           return null;
         default:
-          return key; // для линтера, не для себя.
+          throw new Error(`Wrong status ${key.status}`);
       }
     });
     return result.filter((string) => string !== null).join('\n');

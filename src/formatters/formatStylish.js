@@ -1,40 +1,49 @@
 import _ from 'lodash';
 
-const stringify = (iter, value, depth, repeat) => {
-  if (_.isObject(value)) {
-    if (!Array.isArray(value)) {
-      const entries = Object.entries(value);
-      const result = entries.map((a) => ({ name: a[0], status: 'unchanged', value: a[1] }));
-      return ` {${iter(result, depth + 1)}\n${repeat}  }`;
-    }
-    return ` {${iter(value, depth + 1)}\n${repeat}  }`;
+const getIndent = (n) => ' '.repeat(n);
+const spacesCount = 4;
+
+const stringify = (value, depth) => {
+  if (!_.isObject(value)) {
+    return value;
   }
 
-  if (value === '') {
-    return `${value}`;
-  }
-  return ` ${value}`;
+  const result = Object.keys(value).map((key) => {
+    if(_.isObject(value[key])) {
+      return `${getIndent(depth + 8)}${key}: ${stringify(value[key], depth + 4)}`;
+    }
+    return `${getIndent(depth + 8)}${key}: ${value[key]}`
+  });
+
+  return [`{`, ...result, `${getIndent(depth + 4)}}`].join('\n');
+
 };
 
-export default (obj, indent = '  ', space = 2) => {
-  const iter = (node, depth) => {
-    const repeat = indent.repeat((space * depth) - 1);
-    return node.map((key) => {
-      switch (key.status) {
-        case 'hasChildren':
-          return `\n${repeat}  ${key.name}:${stringify(iter, key.children, depth, repeat)}`;
+export default (dataTree) => {
+  const iter = (treeNode, depth) => {
+    const result = treeNode.map((node) => {
+      const {
+        name, status, value, oldValue, newValue, children
+      } = node;
+
+      switch (status) {
         case 'added':
-          return `\n${repeat}+ ${key.name}:${stringify(iter, key.value, depth, repeat)}`;
-        case 'unchanged':
-          return `\n${repeat}  ${key.name}:${stringify(iter, key.value, depth, repeat)}`;
+          return `${getIndent(depth + 2)}+ ${name}: ${stringify(value, depth)}`;
         case 'deleted':
-          return `\n${repeat}- ${key.name}:${stringify(iter, key.value, depth, repeat)}`;
+          return `${getIndent(depth + 2)}- ${name}: ${stringify(value, depth)}`;
+        case 'unchanged':
+          return `${getIndent(depth + 2)}  ${name}: ${stringify(value, depth)}`;
         case 'changed':
-          return `\n${repeat}- ${key.name}:${stringify(iter, key.oldValue, depth, repeat)}\n${repeat}+ ${key.name}:${stringify(iter, key.newValue, depth, repeat)}`;
+          return `${getIndent(depth + 2)}- ${name}: ${stringify(oldValue, depth)}\n${getIndent(depth + 2)}+ ${name}: ${stringify(newValue, depth)}`;
+        case 'hasChildren':
+          return `${getIndent(depth + 2)}  ${name}: ${iter(children, depth + 4)}`;
         default:
-          return new Error();
+          throw new Error(`Wrong status ${status}.`);
       }
     });
+
+    return ['{', ...result, `${getIndent(depth)}}`].join('\n');
   };
-  return `{${iter(obj, 1).join().replace(/,/g, '')}\n}`;
+
+  return iter(dataTree, 0);
 };
