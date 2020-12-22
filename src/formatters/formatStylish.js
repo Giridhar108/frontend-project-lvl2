@@ -1,7 +1,6 @@
 import _ from 'lodash';
 
 const getIndent = (n) => ' '.repeat(n);
-const spacesCount = 4;
 
 const stringify = (value, depth) => {
   if (!_.isObject(value)) {
@@ -9,21 +8,20 @@ const stringify = (value, depth) => {
   }
 
   const result = Object.keys(value).map((key) => {
-    if(_.isObject(value[key])) {
+    if (_.isObject(value[key])) {
       return `${getIndent(depth + 8)}${key}: ${stringify(value[key], depth + 4)}`;
     }
-    return `${getIndent(depth + 8)}${key}: ${value[key]}`
+    return `${getIndent(depth + 8)}${key}: ${value[key]}`;
   });
 
-  return [`{`, ...result, `${getIndent(depth + 4)}}`].join('\n');
-
+  return ['{', ...result, `${getIndent(depth + 4)}}`].join('\n');
 };
 
 export default (dataTree) => {
   const iter = (treeNode, depth) => {
     const result = treeNode.map((node) => {
       const {
-        name, status, value, oldValue, newValue, children
+        name, status, value, oldValue, newValue, children,
       } = node;
 
       switch (status) {
