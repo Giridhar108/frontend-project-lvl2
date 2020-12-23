@@ -8,6 +8,6 @@ export default (data, format) => {
     case 'yml':
       return yaml.safeLoad(data);
     default:
-      throw new Error('format not found');
+      throw new Error(`Wrong format ${format}`);
   }
 };

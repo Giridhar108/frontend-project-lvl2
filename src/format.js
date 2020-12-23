@@ -1,16 +1,15 @@
 import formatStylish from './formatters/formatStylish.js';
 import formatPlain from './formatters/formatPlain.js';
-import formatJson from './formatters/formatJson.js';
 
-export default (format, innerPresentation) => {
+export default (format, tree) => {
   switch (format) {
     case 'json':
-      return formatJson(innerPresentation);
+      return JSON.stringify(tree);
     case 'plain':
-      return formatPlain(innerPresentation);
+      return formatPlain(tree);
     case 'stylish':
-      return formatStylish(innerPresentation);
+      return formatStylish(tree);
     default:
-      return new Error('format not found');
+      throw new Error(`Wrong format ${format}`);
   }
 };

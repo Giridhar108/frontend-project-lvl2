@@ -17,7 +17,7 @@ const stringify = (value, depth) => {
   return ['{', ...result, `${getIndent(depth + 4)}}`].join('\n');
 };
 
-export default (dataTree) => {
+export default (tree) => {
   const iter = (treeNode, depth) => {
     const result = treeNode.map((node) => {
       const {
@@ -43,5 +43,5 @@ export default (dataTree) => {
     return ['{', ...result, `${getIndent(depth)}}`].join('\n');
   };
 
-  return iter(dataTree, 0);
+  return iter(tree, 0);
 };
