@@ -9,10 +9,10 @@
 
 ### Stylish
 
-[![asciicast](https://asciinema.org/a/LgsOReAtIrh6tMRuDt1XESGkc.svg)](https://asciinema.org/a/LgsOReAtIrh6tMRuDt1XESGkc)
+[![asciicast](https://asciinema.org/a/380750.svg)](https://asciinema.org/a/380750)
 
 ### Plain
-[![asciicast](https://asciinema.org/a/zF6VrAm8ZY3Jg5rfo5h8OWdKY.svg)](https://asciinema.org/a/zF6VrAm8ZY3Jg5rfo5h8OWdKY)
+[![asciicast](https://asciinema.org/a/k56y0xAy95Fzj7pGj9ty90oiN.svg)](https://asciinema.org/a/k56y0xAy95Fzj7pGj9ty90oiN)
 
 ### Json
-[![asciicast](https://asciinema.org/a/DiYi43GYvr3NcBoBGlyOnxQX2.svg)](https://asciinema.org/a/DiYi43GYvr3NcBoBGlyOnxQX2)
+[![asciicast](https://asciinema.org/a/m9yMDOx2bLLxAvyPVLQO40ICZ.svg)](https://asciinema.org/a/m9yMDOx2bLLxAvyPVLQO40ICZ)
